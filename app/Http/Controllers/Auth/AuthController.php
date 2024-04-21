@@ -26,7 +26,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required|',
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -43,15 +43,14 @@ class AuthController extends Controller
                 $user->save();
             }
 
-
             session()->flash('success', [
                 'title' => 'Welcome Back!',
                 'text' => 'You have successfully logged in!',
                 'icon' => 'success',
             ]);
+
             return redirect()->intended('dashboard');
         }
-
         return redirect("login")->with('error', 'Oops! You have entered invalid credentials');
     }
 
